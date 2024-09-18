@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Manifest Script
 // @version      1.1
-// @description  Небольшое дополнение для браузерки с пиксельными котами, в которой нас забанили. Крем соси, Ус был лучше.
+// @description  Перезалив Manifest (aka CatWar) Script для личного пользования авторами. Библиотека костюмов и другие нарушающие функции вырезаны из кода.
 // @author       Krivodushie & Psiii
 // @copyright    2024 ScriptTeam (https://vk.com/cwscript - Роман К. [https://vk.com/liv_loh] & Амина К. [https://vk.com/psiiiiiii])
 // @license      MIT; https://opensource.org/licenses/MIT
@@ -227,7 +227,7 @@ const csDefaults = {
     ,'cgChatSliderLineCol': '#ebebeb'
     ,'cgChatSliderLineBorder': '#a5a5a5'
 
- //                                         БИБЛИОТЕКА КОСТЮМОВ
+ //                                          КОСТЮМОВ
     ,'costumeLibrary': true //               Включить библиотеку костюмов
      ,'clLakeUniverse': true //              Озёрная Вселенная
      ,'clSeaUniverse': false //              Морская Вселенная
@@ -986,7 +986,7 @@ font-size: 13px; }
        <option value="2">Горизонтальный</option>
        </select></td></tr></table>
     </div>
-    <div id="sbCostumes"><div class="setHead" id="costumesHead"><p>Библиотека костюмов</p></div>
+    <div id="sbCostumes"><div class="setHead" id="costumesHead"><p>Библиотека костюмов (Выключена)</p></div>
 
        <!-- Наикраще мiсце для хорошего сексу бiблиотека бiблиотека... -->
        <div><input class="cs-set" disabled id="costumeLibrary" type="checkbox"${globals.costumeLibrary?' checked':''}><label for="costumeLibrary">Библиотека костюмов</label></div>
