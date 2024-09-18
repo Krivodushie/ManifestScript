@@ -5,8 +5,8 @@
 // @author       Krivodushie & Psiii
 // @copyright    2024 ScriptTeam (https://vk.com/cwscript - Роман К. [https://vk.com/liv_loh] & Амина К. [https://vk.com/psiiiiiii])
 // @license      MIT; https://opensource.org/licenses/MIT
-// @updateURL    .
-// @downloadURL  .
+// @updateURL    https://github.com/Krivodushie/ManifestScript/raw/refs/heads/main/ManifestScript.user.js
+// @downloadURL  https://github.com/Krivodushie/ManifestScript/raw/refs/heads/main/ManifestScript.user.js
 // @match        *://catwar.su/*
 // @grant        GM_xmlhttpRequest
 // @grant        GM.xmlHttpRequest
