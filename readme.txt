@@ -1,1 +1,1 @@
-This is an unofficial publication of the Manifest (aka CatWar) Script, intended for personal use only by the author. The costume library has already been removed from this version of the modification.
+This is an unofficial publication of the Manifest (aka CatWar) Script, intended for personal use only by the authors. The costume library has already been removed from this version of the modification.
