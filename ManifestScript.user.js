@@ -1078,8 +1078,8 @@ font-size: 13px; }
          </select><label for="selTheme"> Палитра блоков Manifest Script</label>
        </div>
 
-       <table id="customTable"><tr><td><button disabled onclick="window.open('https://catwarscript.github.io/cw3edit', '_blank')" id="customButton">Конструктор игровой</button></td>
-       <td><div><input class="cs-set" disabled id="playerCustom" type="checkbox"${globals.playerCustom?' checked':''}><label for="playerCustom">Игровая из конструктора игровой</label></div></td></tr></table>
+       <table id="customTable"><tr><td><button onclick="window.open('https://catwarscript.github.io/cw3edit', '_blank')" id="customButton">Конструктор игровой</button></td>
+       <td><div><input class="cs-set" id="playerCustom" type="checkbox"${globals.playerCustom?' checked':''}><label for="playerCustom">Игровая из конструктора игровой</label></div></td></tr></table>
 
 
 
