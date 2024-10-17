@@ -5,8 +5,8 @@
 // @grant       none
 // @version     1.1
 // @license     MIT
-// @downloadURL https://openuserjs.org/install/CatWarScript/kremsosi.user.js
-// @updateURL   https://openuserjs.org/meta/CatWarScript/Крем_соси.meta.js
+// @downloadURL -
+// @updateURL   -
 // @author      ScriptTeam (17.10.2024)
 // @description Крем соси
 // @require     https://github.com/CatWarScript/CatWarScript/raw/main/jquery.min.js
