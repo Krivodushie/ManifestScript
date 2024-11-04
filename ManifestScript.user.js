@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Manifest Script
-// @version      1.1
+// @version      1.2
 // @description  Перезалив Manifest (aka CatWar) Script для личного пользования авторами. Библиотека костюмов и другие нарушающие функции вырезаны из кода.
 // @author       Krivodushie & Psiii
 // @copyright    2024 ScriptTeam (https://vk.com/cwscript - Роман К. [https://vk.com/liv_loh] & Амина К. [https://vk.com/psiiiiiii])
@@ -1086,8 +1086,8 @@ font-size: 13px; }
 
 
 
-<table id="impExpTable"><tr><td><label for="inputImport">Импорт настроек</label></td><td><input disabled type="text" id="inputImport"></td></tr>
-<tr><td><button id="inputExport">Экспорт настроек</button></td><td><input disabled id="outputExport"></td></tr></table>
+<table id="impExpTable"><tr><td><label for="inputImport">Импорт настроек</label></td><td><input type="text" id="inputImport"></td></tr>
+<tr><td><button id="inputExport">Экспорт настроек</button></td><td><input id="outputExport"></td></tr></table>
 
        <div id="sbDefects">
          <div><input class="cs-set" id="cdSColors" type="checkbox"${globals.cdSColors?' checked':''}><label for="cdSColors">Выделять клетки с больными игроками<br><small><i>!!! Галочки слева отвечают за выделение недуга в целом, справа – за особое выделение для третьей и четвёртой стадии</i></small></label></label></div>
