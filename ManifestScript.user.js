@@ -374,16 +374,16 @@ function appendToElementOrFallback(primaryElement, secondaryElement, elementToAd
 
 
 const pageurl = window.location.href;
-const isCW3 = (/^https:\/\/\w?\.?catwar.su\/cw3(?!(\/kns|\/jagd))/.test(pageurl));
-const isSite = !(/^https:\/\/\w?\.?catwar.su\/cw3(\/kns|\/jagd)?.*/.test(pageurl));
-const isDM = (/^https:\/\/\w?\.?catwar.su\/ls/.test(pageurl));
-const isSett = (/^https:\/\/\w?\.?catwar.su\/settings/.test(pageurl));
-const isMyCat = (/^https:\/\/\w?\.?catwar.su\/$/.test(pageurl));
-const isAll = (/^https:\/\/\w?\.?catwar.su\/.*/.test(pageurl));
-const isFae = (/^https:\/\/\w?\.?catwar.su\/fae/.test(pageurl));
-const isBlogs = (/^https:\/\/\w?\.?catwar.su\/(blogs|sniff)/.test(pageurl));
-const isChat = (/^https:\/\/\w?\.?catwar.su\/chat/.test(pageurl));
-const isCustom = (/^https:\/\/\w?\.?catwar.su\/scriptcustomcw3/.test(pageurl));
+const isCW3 = (/^https:\/\/\w?\.?catwar.net\/cw3(?!(\/kns|\/jagd))/.test(pageurl));
+const isSite = !(/^https:\/\/\w?\.?catwar.net\/cw3(\/kns|\/jagd)?.*/.test(pageurl));
+const isDM = (/^https:\/\/\w?\.?catwar.net\/ls/.test(pageurl));
+const isSett = (/^https:\/\/\w?\.?catwar.net\/settings/.test(pageurl));
+const isMyCat = (/^https:\/\/\w?\.?catwar.net\/$/.test(pageurl));
+const isAll = (/^https:\/\/\w?\.?catwar.net\/.*/.test(pageurl));
+const isFae = (/^https:\/\/\w?\.?catwar.net\/fae/.test(pageurl));
+const isBlogs = (/^https:\/\/\w?\.?catwar.net\/(blogs|sniff)/.test(pageurl));
+const isChat = (/^https:\/\/\w?\.?catwar.net\/chat/.test(pageurl));
+const isCustom = (/^https:\/\/\w?\.?catwar.net\/scriptcustomcw3/.test(pageurl));
 
 try {
   if (isCW3) cw3();
@@ -1579,7 +1579,7 @@ function dm() {
     });
 
     function add_templates() {
-      if (window.location.href.includes("https://catwar.su/ls?new")) {
+      if (window.location.href.includes("https://catwar.net/ls?new")) {
         $(document).ready(function() {
           setTimeout(function() {
             initScript();
@@ -5476,7 +5476,7 @@ function blogs() {
     });
 
     function add_templates() {
-      if (window.location.href.includes("https://catwar.su/blogs?creation") || window.location.href.includes("https://catwar.su/sniff?creation")) {
+      if (window.location.href.includes("https://catwar.net/blogs?creation") || window.location.href.includes("https://catwar.net/sniff?creation")) {
         $(document).ready(function() {
           setTimeout(function() {
             initScript();
@@ -5724,7 +5724,7 @@ function chat() {
     });
 
     function add_templates() {
-      if (window.location.href.includes("https://catwar.su/chat")) {
+      if (window.location.href.includes("https://catwar.net/chat")) {
         $(document).ready(function() {
           setTimeout(function() {
             initScript();
