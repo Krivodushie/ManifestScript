@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name         Manifest Script
-// @version      1.2
+// @version      1.3
 // @description  Перезалив Manifest (aka CatWar) Script для личного пользования авторами. Библиотека костюмов и другие нарушающие функции вырезаны из кода.
 // @author       Krivodushie & Psiii
 // @copyright    2024 ScriptTeam (https://vk.com/cwscript - Роман К. [https://vk.com/liv_loh] & Амина К. [https://vk.com/psiiiiiii])
 // @license      MIT; https://opensource.org/licenses/MIT
 // @updateURL    https://github.com/Krivodushie/ManifestScript/raw/refs/heads/main/ManifestScript.user.js
 // @downloadURL  https://github.com/Krivodushie/ManifestScript/raw/refs/heads/main/ManifestScript.user.js
-// @match        *://catwar.su/*
+// @match        *://catwar.net/*
 // @grant        GM_xmlhttpRequest
 // @grant        GM.xmlHttpRequest
 // @grant        GM_addStyle
@@ -18,7 +18,7 @@
 
 'use strict';
 
-const version = 'v1.1'
+const version = 'v1.3'
 const csDefaults = {
      'textTemplates': true //               ШАБЛОНЫ В ЛС
       ,'toggleTT': false //                  Сворачивать ли шаблоны ЛС по умолчанию
