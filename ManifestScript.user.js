@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Manifest Script
-// @version      1.3
+// @version      1.3.1
 // @description  Перезалив Manifest (aka CatWar) Script для личного пользования авторами. Библиотека костюмов и другие нарушающие функции вырезаны из кода.
 // @author       Krivodushie & Psiii
 // @copyright    2024 ScriptTeam (https://vk.com/cwscript - Роман К. [https://vk.com/liv_loh] & Амина К. [https://vk.com/psiiiiiii])
@@ -18,7 +18,7 @@
 
 'use strict';
 
-const version = 'v1.3'
+const version = 'v1.3.1'
 const csDefaults = {
      'textTemplates': true //               ШАБЛОНЫ В ЛС
       ,'toggleTT': false //                  Сворачивать ли шаблоны ЛС по умолчанию
@@ -119,6 +119,7 @@ const csDefaults = {
     ,'brightGameField': false //            Выключить затемнение поля игровой
     ,'nightLagsWarning': true //            Предупреждение о лагах в 3-4 ночи
     ,'darkCatTooltip': false //             Тёмное окошко информации о котах
+    ,'disableTooltip': false //             Выключить инфу о котах
     ,'boneCorrectTimer': false //           Таймер ношения костоправов
     ,'toggleBoneTimer': false //            Свернуть таймер ношения костоправов
     ,'hideWoundWarning': true //            Скрыть предупреждение о ранах
@@ -160,10 +161,10 @@ const csDefaults = {
      ,'tmVariant': 1 //                     Вариант визуала окошка ЛУ
      ,'tmTecPosY': 50 //                    Пиксели окошка сверху
      ,'tmTecPosX': 50 //                    Пиксели окошка слева
-     ,'tmTecFolNames': ['А', 'Б', 'В', 'Г']
+     ,'tmTecFolNames': ['Ива', 'Уступы', 'Ущелье', 'Что-то']
      ,'tmTecFolStatus':[true, true, true, true]
-     ,'tmTecLocNames': ['1А', '2А', '3А', '4А', '5А', '6А', '1Б', '2Б', '3Б', '4Б', '5Б', '6Б', '1В', '2В', '3В', '4В', '5В', '6В', '1Г', '2Г', '3Г', '4Г', '5Г', '6Г']
-     ,'tmTecLocStatus':[true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
+     ,'tmTecLocNames': ['1', '2', '3', '4', '5', '6', '2', '2', '5', '5', '4', '4', '2', '3', '4', '4', '4', '4', '1', '2', '3', '4', '5', '6']
+     ,'tmTecLocStatus':[true, true, true, true, false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
 
  //                                        СТИЛИ
     ,'selTheme': 0
@@ -186,6 +187,9 @@ const csDefaults = {
     ,'compactDefault1': false //  (beta)    Компактная игровая (Вариант 1)
     ,'compactDefault2': false //  (beta)    Компактная игровая (Вариант 2)
     ,'compactDefault3': false //  (beta)    Компактная игровая (Вариант 3)
+    ,'customParams': false //              Кастомные параматры
+    ,'paramColors0': '#5fc055', 'paramColors1':'#f56460', 'paramColors2': '#5fc055', 'paramColors3': '#f56460', 'paramColors4': '#5fc055', 'paramColors5': '#f56460', 'paramColors6': '#5fc055', 'paramColors7': '#f56460', 'paramColors8': '#5fc055', 'paramColors9': '#f56460', 'paramColors10': '#5fc055', 'paramColors11': '#f56460'
+    ,'skillColors0': '#5fc055', 'skillColors1': '#dddddd', 'skillColors2': '#5fc055', 'skillColors3': '#dddddd', 'skillColors4': '#5fc055', 'skillColors5': '#dddddd','skillColors6': '#5fc055', 'skillColors7': '#dddddd', 'skillColors8': '#5fc055', 'skillColors9': '#dddddd', 'skillColors10': '#5fc055', 'skillColors11': '#dddddd', 'skillColors12': '#5fc055', 'skillColors13': '#dddddd', 'skillColors14': '#5fc055', 'skillColors15': '#dddddd', 'skillColors16': '#5fc055', 'skillColors17': '#dddddd'
 
     ,'cgBorderWid': 3 ,'cgBorderType': 'solid' ,'cgBorderCol': '#000000' ,'cgBorderRad': 6 ,'cgIsBorderRad': true
     ,'cgBodyCol': '#ff0000' ,'cgFieldWid': '' ,'cgFieldHei': '' ,'cgFieldX': 500 ,'cgFieldY': 500 ,'cgIsFieldFix': false
@@ -258,19 +262,28 @@ for (var key in csDefaults) {
 }
 
 function getSettings(key) {
-  let setting = 'cs_n_' + key;
-  let val = window.localStorage.getItem(setting);
-  switch (val) {
-    case null:
-      return null;
-    case 'true':
-      return true;
-    case 'false':
-      return false;
-    default:
-      return val;
+    let setting = 'cs_n_' + key;
+    let val = window.localStorage.getItem(setting);
+    switch (key) {
+      case 'paramColors':
+      case 'skillColors':
+        if (val === null) return csDefaults[key];
+        try {
+          let parsed = JSON.parse(val);
+          return Array.isArray(parsed) ? parsed : csDefaults[key];
+        } catch (error) {
+          return csDefaults[key];
+        }
+      case null:
+        return null;
+      case 'true':
+        return true;
+      case 'false':
+        return false;
+      default:
+        return val;
+    }
   }
-}
 
 function setSettings(key, val) {
   let setting = 'cs_n_' + key;
@@ -1039,6 +1052,7 @@ font-size: 13px; }
     <div id="sbGame"><div class="setHead" id="gameHead"><p>Игровая</p></div>
        <div><input class="cs-set" id="showButterflyBots" type="checkbox"${globals.showButterflyBots?' checked':''}><label for="showButterflyBots">Выделять бота-бабочку в Игровой</label></div>
        <div><input class="cs-set" id="darkCatTooltip" type="checkbox"${globals.darkCatTooltip?' checked':''}><label for="darkCatTooltip">Тёмное окошко при наведении на персонажа в Игровой</label></div>
+       <div><input class="cs-set" id="disableTooltip" type="checkbox"${globals.disableTooltip?' checked':''}><label for="disableTooltip">Выключить окошко при наведении на персонажа в Игровой</label></div>
        <div><input class="cs-set" id="brightGameField" type="checkbox"${globals.brightGameField?' checked':''}><label for="brightGameField">Не затемнять поле Игровой</label></div>
        <div><input class="cs-set" id="setka" type="checkbox"${globals.setka?' checked':''}><label for="setka">Включить сетку</label></div>
 
@@ -1186,7 +1200,86 @@ font-size: 13px; }
            </tr>
          </table><br>
          <button id="resetItemSettings">Сбросить настройки предметов</button>
-         <table class="sliderTable"><tr><td class="csSlider"><div class="cs-set cs-set-sl" id="ciOpacity"></div></td><td class="csLabel"><label for="ciOpacity"><small><i>Прозрачность</i></small></label></td></tr></table>
+         <table class="sliderTable"><tr><td class="csSlider"><div class="cs-set cs-set-sl" id="ciOpacity"></div></td><td class="csLabel"><label for="ciOpacity"><small><i>Прозрачность</i></small></label></td></tr></table><br>
+         <div><input class="cs-set" id="customParams" type="checkbox"${globals.customParams?' checked':''}><label for="customParams">Кастомные параметры</div><br>
+           Обязательно поздравьте<a href="https://vk.com/id615589646" targer="__blank">Ину</a> с тем что она качнула идку БУ!
+           <table>
+             <tr>
+               <td>Здоровье</td>
+               <td><input class="cs-set" id="paramColors0" type="color"${globals.paramColors0?' checked':''} style="width: 35px;"></td>
+               <td><input class="cs-set" id="paramColors1" type="color"${globals.paramColors1?' checked':''} style="width: 35px;"></td>
+             </tr>
+             <tr>
+               <td>Бодрость</td>
+               <td><input class="cs-set" id="paramColors2" type="color"${globals.paramColors2?' checked':''} style="width: 35px;"></td>
+               <td><input class="cs-set" id="paramColors3" type="color"${globals.paramColors3?' checked':''} style="width: 35px;"></td>
+             </tr>
+             <tr>
+               <td>Чистота</td>
+               <td><input class="cs-set" id="paramColors4" type="color"${globals.paramColors4?' checked':''} style="width: 35px;"></td>
+               <td><input class="cs-set" id="paramColors5" type="color"${globals.paramColors5?' checked':''} style="width: 35px;"></td>
+             </tr>
+             <tr>
+               <td>Голод</td>
+               <td><input class="cs-set" id="paramColors6" type="color"${globals.paramColors6?' checked':''} style="width: 35px;"></td>
+               <td><input class="cs-set" id="paramColors7" type="color"${globals.paramColors7?' checked':''} style="width: 35px;"></td>
+             </tr>
+             <tr>
+               <td>Жажда</td>
+               <td><input class="cs-set" id="paramColors8" type="color"${globals.paramColors8?' checked':''} style="width: 35px;"></td>
+               <td><input class="cs-set" id="paramColors9" type="color"${globals.paramColors9?' checked':''} style="width: 35px;"></td>
+             </tr>
+             <tr>
+               <td>Нужда</td>
+               <td><input class="cs-set" id="paramColors10" type="color"${globals.paramColors10?' checked':''} style="width: 35px;"></td>
+               <td><input class="cs-set" id="paramColors11" type="color"${globals.paramColors11?' checked':''} style="width: 35px;"></td>
+             </tr>
+             <tr>
+               <td>Нюх</td>
+               <td><input class="cs-set" id="skillColors0" type="color"${globals.skillColors0?' checked':''} style="width: 35px;"></td>
+               <td><input class="cs-set" id="skillColors1" type="color"${globals.skillColors1?' checked':''} style="width: 35px;"></td>
+             </tr>
+             <tr>
+               <td>Копание</td>
+               <td><input class="cs-set" id="skillColors2" type="color"${globals.skillColors2?' checked':''} style="width: 35px;"></td>
+               <td><input class="cs-set" id="skillColors3" type="color"${globals.skillColors3?' checked':''} style="width: 35px;"></td>
+             </tr>
+             <tr>
+               <td>Плавание</td>
+               <td><input class="cs-set" id="skillColors4" type="color"${globals.skillColors4?' checked':''} style="width: 35px;"></td>
+               <td><input class="cs-set" id="skillColors5" type="color"${globals.skillColors5?' checked':''} style="width: 35px;"></td>
+             </tr>
+             <tr>
+               <td>Боевые умения</td>
+               <td><input class="cs-set" id="skillColors6" type="color"${globals.skillColors6?' checked':''} style="width: 35px;"></td>
+               <td><input class="cs-set" id="skillColors7" type="color"${globals.skillColors7?' checked':''} style="width: 35px;"></td>
+             </tr>
+             <tr>
+               <td>Лазание</td>
+               <td><input class="cs-set" id="skillColors8" type="color"${globals.skillColors8?' checked':''} style="width: 35px;"></td>
+               <td><input class="cs-set" id="skillColors9" type="color"${globals.skillColors9?' checked':''} style="width: 35px;"></td>
+             </tr>
+             <tr>
+               <td>Зоркость</td>
+               <td><input class="cs-set" id="skillColors10" type="color"${globals.skillColors10?' checked':''} style="width: 35px;"></td>
+               <td><input class="cs-set" id="skillColors11" type="color"${globals.skillColors11?' checked':''} style="width: 35px;"></td>
+             </tr>
+             <tr>
+               <td>Могущество</td>
+               <td><input class="cs-set" id="skillColors12" type="color"${globals.skillColors12?' checked':''} style="width: 35px;"></td>
+               <td><input class="cs-set" id="skillColors13" type="color"${globals.skillColors13?' checked':''} style="width: 35px;"></td>
+             </tr>
+             <tr>
+               <td>Верность двуногим</td>
+               <td><input class="cs-set" id="skillColors14" type="color"${globals.skillColors14?' checked':''} style="width: 35px;"></td>
+               <td><input class="cs-set" id="skillColors15" type="color"${globals.skillColors15?' checked':''} style="width: 35px;"></td>
+             </tr>
+             <tr>
+               <td>ЦУ</td>
+               <td><input class="cs-set" id="skillColors16" type="color"${globals.skillColors16?' checked':''} style="width: 35px;"></td>
+               <td><input class="cs-set" id="skillColors17" type="color"${globals.skillColors17?' checked':''} style="width: 35px;"></td>
+             </tr>
+           </table>
        </div>
     </div>
 </div>
@@ -1254,6 +1347,13 @@ $(document).ready(function() {
   }
   if (globals.selTheme !== null) {
     $('#selTheme').val(globals.selTheme);
+  }
+  for (let i = 0; i <= 11; i++) {
+    $('#paramColors' + i).val(globals['paramColors' + i]);
+  }
+
+  for (let j = 0; j <= 17; j++) {
+    $('#skillColors' + j).val(globals['skillColors' + j]);
   }
 });
 
@@ -1366,6 +1466,10 @@ $(this).slider({
         });
       });
   });
+
+
+
+
       $('input[name="timeSource"]').on('change', function() {
       setSettings('isClockMoscow', this.id === 'moscowTime');
     });
@@ -3863,7 +3967,7 @@ left: ${globals.dsX}px;
 height: 80px;
 width: 130px;
 background-color: var(--cwsc-bckg-3);
-border: 3px solid var(--cwsc-brdr-1) !important;
+border: 3px solid var(--cwsc-brdr-1);
 border-radius: 7px !important;
 z-index: 50;
 font-family: Montserrat;
@@ -4878,6 +4982,47 @@ window.onload = () => {
     playRandomSound();
   }
 };
+
+  if (globals.customParams) {
+    let paramcss = `<style>
+      div.parameter#clean div.bar-fill { background-color: ${globals.paramColors0}; }
+      div.parameter#clean div.bar { background-color: ${globals.paramColors1};}
+      div.parameter#dream div.bar-fill { background-color: ${globals.paramColors2};}
+      div.parameter#dream div.bar { background-color: ${globals.paramColors3};}
+      div.parameter#health div.bar-fill { background-color: ${globals.paramColors4};}
+      div.parameter#health div.bar { background-color: ${globals.paramColors5};}
+      div.parameter#hunger div.bar-fill { background-color: ${globals.paramColors6};}
+      div.parameter#hunger div.bar { background-color: ${globals.paramColors7};}
+      div.parameter#thirst div.bar-fill { background-color: ${globals.paramColors8};}
+      div.parameter#thirst div.bar { background-color: ${globals.paramColors9};}
+      div.parameter#need div.bar-fill { background-color: ${globals.paramColors10};}
+      div.parameter#need div.bar { background-color: ${globals.paramColors11};}
+      div.skill#smell div.bar-fill { background-color: ${globals.skillColors0};}
+      div.skill#smell div.bar { background-color: ${globals.skillColors1};}
+      div.skill#dig div.bar-fill { background-color: ${globals.skillColors2};}
+      div.skill#dig div.bar { background-color: ${globals.skillColors3};}
+      div.skill#swim div.bar-fill { background-color: ${globals.skillColors4};}
+      div.skill#swim div.bar { background-color: ${globals.skillColors5};}
+      div.skill#might div.bar-fill { background-color: ${globals.skillColors6};}
+      div.skill#might div.bar { background-color: ${globals.skillColors7};}
+      div.skill#tree div.bar-fill { background-color: ${globals.skillColors8};}
+      div.skill#tree div.bar { background-color: ${globals.skillColors9};}
+      div.skill#observ div.bar-fill { background-color: ${globals.skillColors10};}
+      div.skill#observ div.bar { background-color: ${globals.skillColors11};}
+      div.skill#power div.bar-fill { background-color: ${globals.skillColors12};}
+      div.skill#power div.bar { background-color: ${globals.skillColors13};}
+      div.skill#pet_faith div.bar-fill { background-color: ${globals.skillColors14};}
+      div.skill#pet_faith div.bar { background-color: ${globals.skillColors15};}
+      div.skill#heal div.bar-fill { background-color: ${globals.skillColors16};}
+      div.skill#heal div.bar { background-color: ${globals.skillColors17};}
+    </style>`
+
+  $('head').append(paramcss);
+  }
+  if (globals.disableTooltip) {
+    let tooltipcss = `<style>span.cat_tooltip { display: none !important; }</style>`;
+    $('head').append(tooltipcss);
+  }
 }
 
 // ...
