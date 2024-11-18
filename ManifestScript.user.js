@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Manifest Script
-// @version      1.3.1
+// @version      1.3.2
 // @description  Перезалив Manifest (aka CatWar) Script для личного пользования авторами. Библиотека костюмов и другие нарушающие функции вырезаны из кода.
 // @author       Krivodushie & Psiii
 // @copyright    2024 ScriptTeam (https://vk.com/cwscript - Роман К. [https://vk.com/liv_loh] & Амина К. [https://vk.com/psiiiiiii])
@@ -18,7 +18,7 @@
 
 'use strict';
 
-const version = 'v1.3.1'
+const version = 'v1.3.2'
 const csDefaults = {
      'textTemplates': true //               ШАБЛОНЫ В ЛС
       ,'toggleTT': false //                  Сворачивать ли шаблоны ЛС по умолчанию
@@ -262,28 +262,19 @@ for (var key in csDefaults) {
 }
 
 function getSettings(key) {
-    let setting = 'cs_n_' + key;
-    let val = window.localStorage.getItem(setting);
-    switch (key) {
-      case 'paramColors':
-      case 'skillColors':
-        if (val === null) return csDefaults[key];
-        try {
-          let parsed = JSON.parse(val);
-          return Array.isArray(parsed) ? parsed : csDefaults[key];
-        } catch (error) {
-          return csDefaults[key];
-        }
-      case null:
-        return null;
-      case 'true':
-        return true;
-      case 'false':
-        return false;
-      default:
-        return val;
-    }
+  let setting = 'cs_n_' + key;
+  let val = window.localStorage.getItem(setting);
+  switch (val) {
+    case null:
+      return null;
+    case 'true':
+      return true;
+    case 'false':
+      return false;
+    default:
+      return val;
   }
+}
 
 function setSettings(key, val) {
   let setting = 'cs_n_' + key;
