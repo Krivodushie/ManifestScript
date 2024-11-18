@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Manifest Script
-// @version      1.3.2
+// @version      1.3.3
 // @description  Перезалив Manifest (aka CatWar) Script для личного пользования авторами. Библиотека костюмов и другие нарушающие функции вырезаны из кода.
 // @author       Krivodushie & Psiii
 // @copyright    2024 ScriptTeam (https://vk.com/cwscript - Роман К. [https://vk.com/liv_loh] & Амина К. [https://vk.com/psiiiiiii])
@@ -18,7 +18,7 @@
 
 'use strict';
 
-const version = 'v1.3.2'
+const version = 'v1.3.3'
 const csDefaults = {
      'textTemplates': true //               ШАБЛОНЫ В ЛС
       ,'toggleTT': false //                  Сворачивать ли шаблоны ЛС по умолчанию
@@ -161,10 +161,10 @@ const csDefaults = {
      ,'tmVariant': 1 //                     Вариант визуала окошка ЛУ
      ,'tmTecPosY': 50 //                    Пиксели окошка сверху
      ,'tmTecPosX': 50 //                    Пиксели окошка слева
-     ,'tmTecFolNames': ['Ива', 'Уступы', 'Ущелье', 'Что-то']
+     ,'tmTecFolNames': ['А', 'Б', 'В', 'Г']
      ,'tmTecFolStatus':[true, true, true, true]
-     ,'tmTecLocNames': ['1', '2', '3', '4', '5', '6', '2', '2', '5', '5', '4', '4', '2', '3', '4', '4', '4', '4', '1', '2', '3', '4', '5', '6']
-     ,'tmTecLocStatus':[true, true, true, true, false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
+     ,'tmTecLocNames': ['1А', '2А', '3А', '4А', '5А', '6А', '1Б', '2Б', '3Б', '4Б', '5Б', '6Б', '1В', '2В', '3В', '4В', '5В', '6В', '1Г', '2Г', '3Г', '4Г', '5Г', '6Г']
+     ,'tmTecLocStatus':[true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
 
  //                                        СТИЛИ
     ,'selTheme': 0
