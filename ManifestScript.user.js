@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Manifest Script
-// @version      1.3.3
+// @version      1.4
 // @description  Перезалив Manifest (aka CatWar) Script для личного пользования авторами. Библиотека костюмов и другие нарушающие функции вырезаны из кода.
 // @author       Krivodushie & Psiii
 // @copyright    2024 ScriptTeam (https://vk.com/cwscript - Роман К. [https://vk.com/liv_loh] & Амина К. [https://vk.com/psiiiiiii])
@@ -18,7 +18,7 @@
 
 'use strict';
 
-const version = 'v1.3.3'
+const version = 'v1.4'
 const csDefaults = {
      'textTemplates': true //               ШАБЛОНЫ В ЛС
       ,'toggleTT': false //                  Сворачивать ли шаблоны ЛС по умолчанию
@@ -240,6 +240,12 @@ const csDefaults = {
      ,'clMemeCostumes': true //              Показывать ли мемные костюмы
      ,'clRemoveAllTongues': false //        Спрятать все языки.. (К.. Куда?.. 😲)
      ,'clRemoveAllCostumes': false //       Убрать все костюмы
+
+
+
+ // Первое апреля
+    ,'catwarZaminirovan':true
+    ,'isCatwarBlowed': false
 };
 
 const globals = {};
@@ -1271,7 +1277,9 @@ font-size: 13px; }
                <td><input class="cs-set" id="skillColors17" type="color"${globals.skillColors17?' checked':''} style="width: 35px;"></td>
              </tr>
            </table>
-       </div>
+       </div><br>
+       <div><input class="cs-set" id="catwarZaminirovan" type="checkbox"${globals.catwarZaminirovan?' checked':''}><label for="catwarZaminirovan">Заминирован ли кетвар</label></div>
+       <div><input class="cs-set" id="isCatwarBlowed" type="checkbox"${globals.isCatwarBlowed?' checked':''}><label for="isCatwarBlowed">Взорван ли кетвар</label></div>
     </div>
 </div>
        </div>
@@ -1300,53 +1308,32 @@ font-size: 13px; }
         </div></div></div>
         </td></tr></tbody></table></td></tr></tbody></table>`
 
-$(document).ready(function() {
-  $('#clockFontWeight').val(globals.clockFontWeight);
-  $('#cstmDfctWounds').val(globals.cstmDfctWounds);
-  $('#diverSirenVol').val(globals.diverSirenVol);
-  $('#diverSirenMinutes').val(globals.diverSirenMinutes);
-  $('#diverSirenHref').val(globals.diverSirenHref);
-  $('#cdCRani').val(globals.cdCRani);
-  $('#cdCPoison').val(globals.cdCPoison);
-  $('#cdCTrauma').val(globals.cdCTrauma);
-  $('#cdCDrown').val(globals.cdCDrown);
-  $('#cdCCough').val(globals.cdCCough);
-  $('#cdCGryaz').val(globals.cdCGryaz);
-  $('#cdOpacity').val(globals.cdOpacity);
-  $('#ciCHerb').val(globals.ciCHerb);
-  $('#ciCMoss').val(globals.ciCMoss);
-  $('#ciCWeb').val(globals.ciCWeb);
-  $('#ciCStick').val(globals.ciCStick);
-  $('#ciCDust').val(globals.ciCDust);
-  $('#ciCMusor').val(globals.ciCMusor);
-  $('#ciOpacity').val(globals.ciOpacity);
-  $('#cdCPodstilki').val(globals.cdCPodstilki);
-  $('#cgOpacity').val(globals.cgOpacity);
-  $('#cgColor').val(globals.cgColor);
-  $('#dsX').val(globals.dsX);
-  $('#dsY').val(globals.dsY);
-  $('#kalinnikFunctionVolume').val(globals.kalinnikFunctionVolume);
-  $('#smellTimerVol').val(globals.smellTimerVol);
-  $('#smellTimerHref').val(globals.smellTimerHref);
-  $('#newLSVol').val(globals.newLSVol);
-  $('#newChatVol').val(globals.newChatVol);
-  $('#eatenNoteVol').val(globals.eatenNoteVol);
-  $('#tmTecPosX').val(globals.tmTecPosX);
-  $('#tmTecPosY').val(globals.tmTecPosY);
-  if (globals.tmVariant !== null) {
-    $('#tmVariant').val(globals.tmVariant);
-  }
-  if (globals.selTheme !== null) {
-    $('#selTheme').val(globals.selTheme);
-  }
-  for (let i = 0; i <= 11; i++) {
-    $('#paramColors' + i).val(globals['paramColors' + i]);
-  }
+        $(document).ready(function() {
+          const keys = [
+            'clockFontWeight', 'cstmDfctWounds', 'diverSirenVol', 'diverSirenMinutes',
+            'diverSirenHref', 'cdCRani', 'cdCPoison', 'cdCTrauma', 'cdCDrown',
+            'cdCCough', 'cdCGryaz', 'cdOpacity', 'ciCHerb', 'ciCMoss',
+            'ciCWeb', 'ciCStick', 'ciCDust', 'ciCMusor', 'ciOpacity',
+            'cdCPodstilki', 'cgOpacity', 'cgColor', 'dsX', 'dsY',
+            'kalinnikFunctionVolume', 'smellTimerVol', 'smellTimerHref',
+            'newLSVol', 'newChatVol', 'eatenNoteVol', 'tmTecPosX',
+            'tmTecPosY', 'tmVariant', 'selTheme'
+          ];
 
-  for (let j = 0; j <= 17; j++) {
-    $('#skillColors' + j).val(globals['skillColors' + j]);
-  }
-});
+          keys.forEach(key => {
+            if (globals[key] !== null) {
+              $('#' + key).val(globals[key]);
+            }
+          });
+
+          for (let i = 0; i <= 11; i++) {
+            $('#paramColors' + i).val(globals['paramColors' + i]);
+          }
+
+          for (let j = 0; j <= 17; j++) {
+            $('#skillColors' + j).val(globals['skillColors' + j]);
+          }
+        });
 
 function peredvinutBloki(importFrom, exportTo) {
   const sourceDivSelector = importFrom; // Двигаемое
@@ -1591,13 +1578,6 @@ $('input[name="iscdsramki"]').on('change', function() {
             }});})();
   $(document).ready(function() { let clickCount = 0; const videoUrls = ['https://www.youtube-nocookie.com/embed/1rd4P7uMvvQ?si=TkZTp3GZbxxvcYqV&controls=0', 'https://www.youtube-nocookie.com/embed/elaSoKe1gFw?si=Q5JWB-t06mRZDLra&controls=0', 'https://www.youtube-nocookie.com/embed/8Jk_5Yry_SE?si=cGZXfc39MZl9W9_I&controls=0' ]; $("a.active[data-target='1']").click(function(e) {e.preventDefault(); clickCount++;if (clickCount >= 5) {clickCount = 0; const randomIndex = Math.floor(Math.random() * videoUrls.length); const randomVideoUrl = videoUrls[randomIndex]; const iframe = document.createElement('iframe'); iframe.width = '99%'; iframe.height = '530px'; iframe.src = randomVideoUrl; iframe.title = 'YouTube video player'; iframe.frameborder = '0'; iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'; iframe.allowfullscreen = true; iframe.referrerpolicy = 'strict-origin-when-cross-origin'; $("#tableContent").empty().append(iframe); } }); });
 }
-
-
-
-
-// ...
-// ...
-// ...
 
 function dm() {
   if (globals['dontReadenLS']) {
@@ -1923,10 +1903,6 @@ if (globals['timerForLS']) {
 
 
 }
-
-// ...
-// ...
-// ...
 
 function cw3() {
   if (globals['inGameClock']) {
@@ -3506,168 +3482,6 @@ chatmsghei = chatmsghei - 22;
     $('head').append(fptitlesCss);
   }
 
-
-
-
-
-/*
-  if (globals["costumeLibrary"]) {
-    (function() {
-  const githubUrl = 'https://raw.githubusercontent.com/CatWarScript/CatWarScript/main/COSTUMES/catwarScript_Costumes.css?raw=true';
-  $.ajax({
-    url: githubUrl,
-    dataType: 'text',
-    success: function(data) {
-      $('head').append('<style>' + data + '</style>');
-    }});})();
-    if (globals["watermarkCostumes"]) {
-        (function() {
-  const githubUrl = 'https://raw.githubusercontent.com/CatWarScript/CatWarScript/main/COSTUMES/catwarScript_CostumesW.css?raw=true';
-  $.ajax({
-    url: githubUrl,
-    dataType: 'text',
-    success: function(data) {
-      $('head').append('<style>' + data + '</style>');
-    }});})();}
-
-    if (globals["clLakeUniverse"]) {
-        (function() { // ОБЫЧНЫЕ КОСТЮМЫ ОЗЁРКА
-            const githubUrl = 'https://raw.githubusercontent.com/CatWarScript/costumes/main/OV/costumes.css?raw=true';
-            $.ajax({
-                url: githubUrl,
-                dataType: 'text',
-                success: function(data) {
-                    $('head').append('<style>' + data + '</style>');
-                }});})();
-        if (globals["clMemeCostumes"]) {
-            (function() { // МЕМНЫЕ КОСТЮМЫ ОЗЁРКА
-                const githubUrl = 'https://raw.githubusercontent.com/CatWarScript/costumes/main/OV/costumesMEME.css?raw=true';
-                $.ajax({
-                    url: githubUrl,
-                    dataType: 'text',
-                    success: function(data) {
-                        $('head').append('<style>' + data + '</style>');
-                    }});})();
-            if (globals["watermarkCostumes"]) {
-                (function() { // ВАТЕРМАРКИ ДЛЯ МЕМНЫХ КОСТЮМОВ ОЗЁРКА
-                    const githubUrl = 'https://raw.githubusercontent.com/CatWarScript/costumes/main/OV/watermarkMEME.css?raw=true';
-                    $.ajax({
-                        url: githubUrl,
-                        dataType: 'text',
-                        success: function(data) {
-                            $('head').append('<style>' + data + '</style>');
-                        }});})();
-            }
-        }
-        if (globals["watermarkCostumes"]) {
-            (function() { // ВАТЕРМАРКИ ДЛЯ КОСТЮМОВ ОЗЁРКА
-                const githubUrl = 'https://raw.githubusercontent.com/CatWarScript/costumes/main/OV/watermark.css?raw=true';
-                $.ajax({
-                    url: githubUrl,
-                    dataType: 'text',
-                    success: function(data) {
-                        $('head').append('<style>' + data + '</style>');
-                    }});})();
-        }
-    }
-    if (globals["clSeaUniverse"]) {
-        (function() { // ОБЫЧНЫЕ КОСТЮМЫ МОРСКАЯ
-            const githubUrl = 'https://raw.githubusercontent.com/CatWarScript/costumes/main/MV/costumes.css?raw=true';
-            $.ajax({
-                url: githubUrl,
-                dataType: 'text',
-                success: function(data) {
-                    $('head').append('<style>' + data + '</style>');
-                }});})();
-        if (globals["clMemeCostumes"]) {
-            (function() { // МЕМНЫЕ КОСТЮМЫ МОРСКАЯ
-                const githubUrl = 'https://raw.githubusercontent.com/CatWarScript/costumes/main/MV/costumesMEME.css?raw=true';
-                $.ajax({
-                    url: githubUrl,
-                    dataType: 'text',
-                    success: function(data) {
-                        $('head').append('<style>' + data + '</style>');
-                    }});})();
-            if (globals["watermarkCostumes"]) {
-                (function() { // ВАТЕРМАРКИ ДЛЯ МЕМНЫХ КОСТЮМОВ МОРСКАЯ
-                    const githubUrl = 'https://raw.githubusercontent.com/CatWarScript/costumes/main/MV/watermarkMEME.css?raw=true';
-                    $.ajax({
-                        url: githubUrl,
-                        dataType: 'text',
-                        success: function(data) {
-                            $('head').append('<style>' + data + '</style>');
-                        }});})();
-            }
-        }
-        if (globals["watermarkCostumes"]) {
-            (function() { // ВАТЕРМАРКИ ДЛЯ КОСТЮМОВ МОРСКАЯ
-                const githubUrl = 'https://raw.githubusercontent.com/CatWarScript/costumes/main/MV/watermark.css?raw=true';
-                $.ajax({
-                    url: githubUrl,
-                    dataType: 'text',
-                    success: function(data) {
-                        $('head').append('<style>' + data + '</style>');
-                    }});})();
-        }
-    }
-    if (globals["clCreatorUniverse"]) {
-        (function() { // ОБЫЧНЫЕ КОСТЮМЫ ТВОРЦЫ
-            const githubUrl = 'https://raw.githubusercontent.com/CatWarScript/costumes/main/VT/costumes.css?raw=true';
-            $.ajax({
-                url: githubUrl,
-                dataType: 'text',
-                success: function(data) {
-                    $('head').append('<style>' + data + '</style>');
-                }});})();
-        if (globals["clMemeCostumes"]) {
-            (function() { // МЕМНЫЕ КОСТЮМЫ ТВОРЦЫ
-                const githubUrl = 'https://raw.githubusercontent.com/CatWarScript/costumes/main/VT/costumesMEME.css?raw=true';
-                $.ajax({
-                    url: githubUrl,
-                    dataType: 'text',
-                    success: function(data) {
-                        $('head').append('<style>' + data + '</style>');
-                    }});})();
-            if (globals["watermarkCostumes"]) {
-                (function() { // ВАТЕРМАРКИ ДЛЯ МЕМНЫХ КОСТЮМОВ ТВОРЦЫ
-                    const githubUrl = 'https://raw.githubusercontent.com/CatWarScript/costumes/main/VT/watermarkMEME.css?raw=true';
-                    $.ajax({
-                        url: githubUrl,
-                        dataType: 'text',
-                        success: function(data) {
-                            $('head').append('<style>' + data + '</style>');
-                        }});})();
-            }
-        }
-        if (globals["watermarkCostumes"]) {
-            (function() { // ВАТЕРМАРКИ ДЛЯ КОСТЮМОВ ТВОРЦЫ
-                const githubUrl = 'https://raw.githubusercontent.com/CatWarScript/costumes/main/VT/watermark.css?raw=true';
-                $.ajax({
-                    url: githubUrl,
-                    dataType: 'text',
-                    success: function(data) {
-                        $('head').append('<style>' + data + '</style>');
-                    }});})();
-        }
-    }
-  }
-
-    (function() {
-        const githubUrl = 'https://raw.githubusercontent.com/CatWarScript/costumes/main/MERO/costumes.css?raw=true';
-        $.ajax({
-            url: githubUrl,
-            dataType: 'text',
-            success: function(data) {
-                $('head').append('<style>' + data + '</style>');
-            }});})();
-
-  if (globals.clRemoveAllTongues) {
-    $('head').append(`<style>div[style*=tongue]{display: none;}</style>`)
-  }
-  if (globals.clRemoveAllCostumes) {
-    $('head').append(`<style>div[style*=costume]{display: none;}</style>`)
-  }
-*/
   if (globals.shortFightLog) {
     $(document).ready(function () {
       let prevLog = '';
@@ -3822,25 +3636,26 @@ chatmsghei = chatmsghei - 22;
     });
   }
 
-if (globals.fightWarning) {
-  let last_note, noteFirst = true;
-  const targetNode = document.getElementById('ist');
-  const config = { subtree: true, childList: true };
-  const observer = new MutationObserver(mutations => {
-    for (const mutation of mutations) {
-      if (mutation.type === 'childList') {
-        last_note = $(targetNode.innerHTML.split('.')).get(-2);
-        if (last_note !== undefined) {
-          if (last_note.indexOf("в боевую стойку, поскольку на меня напал") !== -1 && !noteFirst) {
-            playAudio(globals.fightWarningHref, globals.fightWarningVol);
-          }
-          noteFirst = false;
+    if (globals.fightWarning) {
+    let last_note, noteFirst = true;
+    const targetNode = document.getElementById('ist');
+    const config = { subtree: true, childList: true };
+    const observer = new MutationObserver(mutations => {
+        for (const mutation of mutations) {
+        if (mutation.type === 'childList') {
+            last_note = $(targetNode.innerHTML.split('.')).get(-2);
+            if (last_note !== undefined) {
+            if (last_note.indexOf("в боевую стойку, поскольку на меня напал") !== -1 && !noteFirst) {
+                playAudio(globals.fightWarningHref, globals.fightWarningVol);
+            }
+            noteFirst = false;
+            }
         }
-      }
+        }
+    });
+    observer.observe(targetNode, config);
     }
-  });
-  observer.observe(targetNode, config);
-}
+
   if (globals.eatenNote) {
     const targetNode = document.getElementById('block_mess');
     let soundPlayed = false;
@@ -4928,51 +4743,51 @@ $('#sblock').animate({ backgroundColor: '#994e4e' }, 500);
       });
     });
   }
-let currentSoundIndex = 0;
-let soundPlaying = false;
-let soundInstance = null;
+    let currentSoundIndex = 0;
+    let soundPlaying = false;
+    let soundInstance = null;
 
-const sounds = [
-  'https://github.com/CatWarScript/myFiles/raw/main/instasamkaLispiha.mp3?raw=true',
-  'https://github.com/CatWarScript/myFiles/raw/main/instasamkaPusijusi.mp3?raw=true',
-  'https://github.com/CatWarScript/myFiles/raw/main/instasamkaZadengida.mp3?raw=true'
-];
+    const sounds = [
+    'https://github.com/CatWarScript/myFiles/raw/main/instasamkaLispiha.mp3?raw=true',
+    'https://github.com/CatWarScript/myFiles/raw/main/instasamkaPusijusi.mp3?raw=true',
+    'https://github.com/CatWarScript/myFiles/raw/main/instasamkaZadengida.mp3?raw=true'
+    ];
 
-function playRandomSound() {
-  if (soundPlaying) {
-    return;
-  }
-  const randomIndex = Math.floor(Math.random() * sounds.length);
-  soundInstance = new Audio(sounds[randomIndex]);
-  soundInstance.volume = globals.kalinnikFunctionVolume;
-  soundInstance.onended = () => {
-    soundPlaying = false;
-    currentSoundIndex = (currentSoundIndex + 1) % sounds.length;
-  };
-
-  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-    navigator.mediaDevices.getUserMedia({ audio: true })
-      .then(stream => {
-        soundInstance.play();
-        soundPlaying = true;
-      })
-      .catch(err => {
-        console.error("Микрофон выключен:", err);
-      });
-  } else {
-    soundInstance.onloadedmetadata = () => {
-      setTimeout(() => {
-        soundInstance.play();
-        soundPlaying = true;
-      }, 1000);
+    function playRandomSound() {
+    if (soundPlaying) {
+        return;
+    }
+    const randomIndex = Math.floor(Math.random() * sounds.length);
+    soundInstance = new Audio(sounds[randomIndex]);
+    soundInstance.volume = globals.kalinnikFunctionVolume;
+    soundInstance.onended = () => {
+        soundPlaying = false;
+        currentSoundIndex = (currentSoundIndex + 1) % sounds.length;
     };
-  }
-}
-window.onload = () => {
-  if (globals && globals.kalinnikFunction) {
-    playRandomSound();
-  }
-};
+
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(stream => {
+            soundInstance.play();
+            soundPlaying = true;
+        })
+        .catch(err => {
+            console.error("Микрофон выключен:", err);
+        });
+    } else {
+        soundInstance.onloadedmetadata = () => {
+        setTimeout(() => {
+            soundInstance.play();
+            soundPlaying = true;
+        }, 1000);
+        };
+    }
+    }
+    window.onload = () => {
+    if (globals && globals.kalinnikFunction) {
+        playRandomSound();
+    }
+    };
 
   if (globals.customParams) {
     let paramcss = `<style>
@@ -5014,11 +4829,169 @@ window.onload = () => {
     let tooltipcss = `<style>span.cat_tooltip { display: none !important; }</style>`;
     $('head').append(tooltipcss);
   }
+
+
+    let blowHtml = `кетвар взорван<br><img src='https://raw.githubusercontent.com/Krivodushie/ManifestScript/refs/heads/main/explosion.gif' alt='vzriv' width='600px'>`
+
+if (globals.catwarZaminirovan) {
+    let css = `<style>
+        #minirovanie-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 99999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 2em;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        #minirovanie-content {
+            padding: 20px;
+            background-color: rgba(50, 50, 50, 0.8);
+            border-radius: 10px;
+        }
+
+        #timer1 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        #defuse-button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #defuse-button:hover {
+            background-color: #c82333;
+        }
+
+        #skip-button {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        font-size: 15px;
+        }
+    </style>`;
+
+    $('head').append(css);
+
+    let minirovanieOverlay = `
+        <div id='minirovanie-overlay'>
+        <span id='skip-button'>Пропустить</span>
+            <div id='minirovanie-content'>
+                <span>КЕТВАР ЗАМИНИРОВАН!</span>
+                <div id='timer1'>Взрыв через: <span id='time-remaining'>10:00</span></div>
+                <button id='defuse-button'>Нажми <span id="clicks-remaining">1781</span> раз, чтобы обезвредить</button>
+            </div>
+        </div>`;
+
+    $('body').prepend(minirovanieOverlay);
+
+    $(document).ready(function() {
+
+        $('body').css('overflow', 'hidden');
+        let timerDuration = 600;
+        let timerInterval;
+        let remainingSeconds = timerDuration;
+
+        function updateTimerDisplay() {
+            let minutes = Math.floor(remainingSeconds / 60);
+            let seconds = remainingSeconds % 60;
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+            $('#time-remaining').text(minutes + ":" + seconds);
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                remainingSeconds--;
+                updateTimerDisplay();
+
+                if (remainingSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    $('body').empty();
+                    $('body').prepend(blowHtml);
+                    removeMinirovanie();
+                    setSettings('isCatwarBlowed', false)
+                }
+            }, 1000);
+        }
+
+        updateTimerDisplay();
+        startTimer();
+
+        let clickCount = 0;
+        let clicksNeeded = 1781;
+
+        let skipButton = $('#skip')
+
+        $('#defuse-button').on('click', function() {
+            if (skipButton) {
+                $('#skip').remove();
+            }
+            clickCount++;
+            let remainingClicks = clicksNeeded - clickCount;
+            $('#clicks-remaining').text(remainingClicks);
+
+            if (clickCount >= clicksNeeded) {
+                clearInterval(timerInterval);
+                alert("Кетвар разминирован. Очень жаль");
+                removeMinirovanie();
+            } else {
+              //  console.log(`Нажато ${clickCount}/${clicksNeeded} раз.`);
+            }
+        });
+
+        $('#skip-button').on('click', function() {
+            clearInterval(timerInterval);
+            alert("Кетвар разминирован. Очень жаль");
+            removeMinirovanie();
+        });
+
+        function removeMinirovanie() {
+            $('#minirovanie-overlay').remove();
+            $('body').css('overflow', 'auto');
+            setSettings('catwarZaminirovan', false)
+        }
+
+        $('#clicks-remaining').text(clicksNeeded);
+    });
 }
 
-// ...
-// ...
-// ...
+if (globals.isCatwarBlowed) {
+  $(document).ready(function() {
+    setTimeout(function() {
+      $('body').empty();
+      $('body').prepend(blowHtml);
+    }, 60);
+  });
+}
+
+// Тому кто читает эту мутотень здарова
+// У меня есть анекдот про армян оцените его пожалуйста
+//
+// Два армянина инвалида-колясочника едут по пустыне.
+// Видят они на песке лампу, один из них натирает её. Появляется Джинн и говорит:
+// - О дорогие путники, вы можете загадать одно желание на двоих.
+// Армяне, не задумываясь, кричат:
+// - МЫ ХОТИМ ХОДИТЬ!
+// Джинн, подумав, отвечает:
+// - Ну, раз у вас одно желание на двоих, ходить будете по очереди.
+// Ну и дал им нарды.
+
+}
 
 function myCat() {
 function getBackgroundColorHex() {
@@ -5536,20 +5509,6 @@ function all() {
   }
 
   // Yuaksoinocenow
-
-   /* $(document).ready(function() {
-  const $trChat = $('#tr_chat');
-  const backgroundColor = $trChat.css('background-color');
-  const rgbColor = backgroundColor.match(/rgb\((\d+), (\d+), (\d+)\)/);
-  const r = parseInt(rgbColor[1]);
-  const g = parseInt(rgbColor[2]);
-  const b = parseInt(rgbColor[3]);
-  const brightnessFactor = 1.2; // Коэффициент яркости
-  const newR = Math.round(r * brightnessFactor);
-  const newG = Math.round(g * brightnessFactor);
-  const newB = Math.round(b * brightnessFactor);
-  $trChat.css('background-color', `rgb(${newR}, ${newG}, ${newB})`);
-}); */
 }
 
 // ...
