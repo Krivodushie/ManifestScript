@@ -4924,7 +4924,7 @@ if (globals.catwarZaminirovan) {
                     $('body').empty();
                     $('body').prepend(blowHtml);
                     removeMinirovanie();
-                    setSettings('isCatwarBlowed', false)
+                    setSettings('isCatwarBlowed', true)
                 }
             }, 1000);
         }
