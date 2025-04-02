@@ -244,7 +244,7 @@ const csDefaults = {
 
 
  // Первое апреля
-    ,'catwarZaminirovan':true
+    ,'catwarZaminirovan':false
     ,'isCatwarBlowed': false
 };
 
