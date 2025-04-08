@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Manifest Script
-// @version      1.4
+// @version      1.5
 // @description  Перезалив Manifest (aka CatWar) Script для личного пользования авторами. Библиотека костюмов и другие нарушающие функции вырезаны из кода.
 // @author       Krivodushie & Psiii
 // @copyright    2024 ScriptTeam (https://vk.com/cwscript - Роман К. [https://vk.com/liv_loh] & Амина К. [https://vk.com/psiiiiiii])
@@ -18,7 +18,11 @@
 
 'use strict';
 
-const version = 'v1.4'
+// Changelog
+// v1.5
+// – Добавлена функция, заменяющая слово ОПИ на слово балтика. Ну а че бы и нет, забанен по причине балтика 
+
+const version = 'v1.5'
 const csDefaults = {
      'textTemplates': true //               ШАБЛОНЫ В ЛС
       ,'toggleTT': false //                  Сворачивать ли шаблоны ЛС по умолчанию
@@ -241,11 +245,8 @@ const csDefaults = {
      ,'clRemoveAllTongues': false //        Спрятать все языки.. (К.. Куда?.. 😲)
      ,'clRemoveAllCostumes': false //       Убрать все костюмы
 
-
-
- // Первое апреля
-    ,'catwarZaminirovan':false
-    ,'isCatwarBlowed': false
+//                                           Прекрасное
+     ,'opiToBaltika': false
 };
 
 const globals = {};
@@ -1278,9 +1279,8 @@ font-size: 13px; }
              </tr>
            </table>
        </div><br>
-       <div><input class="cs-set" id="catwarZaminirovan" type="checkbox"${globals.catwarZaminirovan?' checked':''}><label for="catwarZaminirovan">Заминирован ли кетвар</label></div>
-       <div><input class="cs-set" id="isCatwarBlowed" type="checkbox"${globals.isCatwarBlowed?' checked':''}><label for="isCatwarBlowed">Взорван ли кетвар</label></div>
-    </div>
+       <div><input class="cs-set" id="opiToBaltika" type="checkbox"${globals.opiToBaltika?' checked':''}><label for="opiToBaltika">Пивоваренный завод «Балтика»</label></div>
+     </div>
 </div>
        </div>
      </div>
@@ -4979,6 +4979,33 @@ if (globals.isCatwarBlowed) {
   });
 }
 
+
+
+if (globals.opiToBaltika) {
+(function() {
+    function replaceText(element) {
+        if (element.nodeType === 3) {
+            element.data = element.data.replace(/опи/gi, 'балтика');
+        } else {
+            for (let i = 0; i < element.childNodes.length; i++) {
+                replaceText(element.childNodes[i]);
+            }
+        }
+    }
+    replaceText(document.body);
+    const observer = new MutationObserver(mutations => {
+        mutations.forEach(mutation => {
+            mutation.addedNodes.forEach(node => {
+                replaceText(node);
+            });
+        });
+    });
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+})();
+}
 // Тому кто читает эту мутотень здарова
 // У меня есть анекдот про армян оцените его пожалуйста
 //
