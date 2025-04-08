@@ -4978,34 +4978,6 @@ if (globals.isCatwarBlowed) {
     }, 60);
   });
 }
-
-
-
-if (globals.opiToBaltika) {
-(function() {
-    function replaceText(element) {
-        if (element.nodeType === 3) {
-            element.data = element.data.replace(/опи/gi, 'балтика');
-        } else {
-            for (let i = 0; i < element.childNodes.length; i++) {
-                replaceText(element.childNodes[i]);
-            }
-        }
-    }
-    replaceText(document.body);
-    const observer = new MutationObserver(mutations => {
-        mutations.forEach(mutation => {
-            mutation.addedNodes.forEach(node => {
-                replaceText(node);
-            });
-        });
-    });
-    observer.observe(document.body, {
-        childList: true,
-        subtree: true
-    });
-})();
-}
 // Тому кто читает эту мутотень здарова
 // У меня есть анекдот про армян оцените его пожалуйста
 //
@@ -5155,6 +5127,33 @@ console.log(globals['dsghnImg']);
 // ...
 
 function all() {
+if (globals.opiToBaltika) {
+(function() {
+    function replaceText(element) {
+        if (element.nodeType === 3) {
+            element.data = element.data.replace(/опи/gi, 'балтика');
+        } else {
+            for (let i = 0; i < element.childNodes.length; i++) {
+                replaceText(element.childNodes[i]);
+            }
+        }
+    }
+    replaceText(document.body);
+    const observer = new MutationObserver(mutations => {
+        mutations.forEach(mutation => {
+            mutation.addedNodes.forEach(node => {
+                replaceText(node);
+            });
+        });
+    });
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+})();
+}
+
+     
   function addFont() {
     let link = document.createElement('link');
     link.href = 'https://fonts.googleapis.com/css?family=Montserrat';
