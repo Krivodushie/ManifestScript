@@ -5131,7 +5131,7 @@ if (globals.opiToBaltika) {
 (function() {
     function replaceText(element) {
         if (element.nodeType === 3) {
-            element.data = element.data.replace(/опи/gi, 'балтика');
+            element.data = element.data.replace(/(^|[^а-яё])(опи)([^а-яё]|$)/gi, '$1балтика$3');
         } else {
             for (let i = 0; i < element.childNodes.length; i++) {
                 replaceText(element.childNodes[i]);
@@ -5153,7 +5153,8 @@ if (globals.opiToBaltika) {
 })();
 }
 
-     
+
+
   function addFont() {
     let link = document.createElement('link');
     link.href = 'https://fonts.googleapis.com/css?family=Montserrat';
