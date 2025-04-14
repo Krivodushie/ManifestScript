@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Manifest Script
-// @version      1.5
+// @version      1.6
 // @description  Перезалив Manifest (aka CatWar) Script для личного пользования авторами. Библиотека костюмов и другие нарушающие функции вырезаны из кода.
 // @author       Krivodushie & Psiii
 // @copyright    2024 ScriptTeam (https://vk.com/cwscript - Роман К. [https://vk.com/liv_loh] & Амина К. [https://vk.com/psiiiiiii])
@@ -22,7 +22,7 @@
 // v1.5
 // – Добавлена функция, заменяющая слово ОПИ на слово балтика. Ну а че бы и нет, забанен по причине балтика 
 
-const version = 'v1.5'
+const version = 'v1.6'
 const csDefaults = {
      'textTemplates': true //               ШАБЛОНЫ В ЛС
       ,'toggleTT': false //                  Сворачивать ли шаблоны ЛС по умолчанию
